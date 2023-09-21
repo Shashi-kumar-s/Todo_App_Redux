@@ -1,12 +1,9 @@
 import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
-import "./index.css"
-import "./assets/global.css"
-import { legacy_createStore as createStore } from "redux"
+import "./style/index.css"
+import "./style/global.css"
 import { Provider } from "react-redux"
-import reducer from "./Reducer.js"
-
-const store=createStore(reducer)
+import store from"./redux/store/Store.jsx"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store} >
