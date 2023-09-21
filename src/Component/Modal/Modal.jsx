@@ -7,6 +7,7 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons"
 import FontAwesome from "../FontAwesome/FontAwesome"
 import { useDispatch } from "react-redux"
 import { Typography } from "@mui/material"
+import { Addtodo } from "../../redux/actions/Todo_Action"
 
 const style = {
   position: "absolute",
@@ -21,15 +22,27 @@ const style = {
 }
 
 const ModalBox = (props) => {
-  const dispatch = useDispatch()
-  const { onchange, value, onclick } = props
-
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  //............................>
+
+  const dispatch = useDispatch()
+  const [inputData, setInputData] = useState("")
+
+  const handleInput = (e) => {
+    return setInputData(e.target.value)
+  }
+
+  const handleAdd = () => {
+    dispatch(Addtodo({ id:Date.now(), name: inputData, checked: false }))
+    setInputData("")
+    handleClose()
+  }
+
   return (
-    <div>
+    <form onSubmit={() => dispatch(Addtodo(inputData))}>
       <Button onClick={handleOpen}>
         <FontAwesome iconName={faCirclePlus} className={"font_icon"} />
       </Button>
@@ -46,25 +59,18 @@ const ModalBox = (props) => {
           <TextInputField
             variant={"standard"}
             className={"w-[90%]"}
-            onchange={onchange}
-            value={value}
+            onchange={handleInput}
+            value={inputData}
           />
           <Box className="flex justify-between px-1 pt-4">
             <Button onClick={handleClose}>Cancel</Button>
-            <Button
-              onClick={() =>
-                dispatch({
-                  type: "Add_Todo",
-                  payload: { value, handleClose, onclick },
-                })
-              }
-            >
+            <Button type="submit" onClick={handleAdd}>
               Done
             </Button>
           </Box>
         </Box>
       </Modal>
-    </div>
+    </form>
   )
 }
 export default ModalBox
