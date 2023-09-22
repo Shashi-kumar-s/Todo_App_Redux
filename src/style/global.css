@@ -1,6 +1,32 @@
-.font_icon{
+.font_icon {
     font-size: 25px !important;
 }
-.checkbox{
+
+.checkbox {
     color: #fff !important;
+}
+
+.MuiButton-root {
+    margin: 4px !important;
+    padding: 4px !important;
+}
+
+.todo_List_Box {
+    overflow-y: scroll !important;
+    height: 60vh !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(180deg,#d0368a 0%,#708ad4 99%);
+    border-radius: 100px;
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff,0.5),inset -2px -2px 2px rgba(0,0,0,.25);
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(43, 42, 42);
+
 }
