@@ -7,7 +7,7 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons"
 import FontAwesome from "../FontAwesome/FontAwesome"
 import { useDispatch } from "react-redux"
 import { Typography } from "@mui/material"
-import { Addtodo } from "../../redux/actions/Todo_Action"
+import { AddTodo } from "../../redux/actions/Todo_Action"
 
 const style = {
   position: "absolute",
@@ -35,14 +35,17 @@ const ModalBox = (props) => {
     return setInputData(e.target.value)
   }
 
-  const handleAdd = () => {
-    dispatch(Addtodo({ id:Date.now(), name: inputData, checked: false }))
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if(inputData.trim()!==""){
+      dispatch(AddTodo({ id:Date.now(), name: inputData, checked: false }))
+    }
     setInputData("")
     handleClose()
   }
 
   return (
-    <form onSubmit={() => dispatch(Addtodo(inputData))}>
+    <>
       <Button onClick={handleOpen}>
         <FontAwesome iconName={faCirclePlus} className={"font_icon"} />
       </Button>
@@ -52,6 +55,7 @@ const ModalBox = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+        <form onSubmit={handleAdd}>
         <Box sx={style} className="rounded-lg">
           <Typography>
             <b>Add Todo</b>
@@ -61,6 +65,8 @@ const ModalBox = (props) => {
             className={"w-[90%]"}
             onchange={handleInput}
             value={inputData}
+            autofocus={true}
+            autoComplete={"off"}
           />
           <Box className="flex justify-between px-1 pt-4">
             <Button onClick={handleClose}>Cancel</Button>
@@ -69,8 +75,9 @@ const ModalBox = (props) => {
             </Button>
           </Box>
         </Box>
+        </form>
       </Modal>
-    </form>
+      </>
   )
 }
 export default ModalBox
